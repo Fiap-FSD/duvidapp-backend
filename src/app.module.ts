@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PostModule } from './post/post.module';
+import { DuvidaModule } from './duvida/duvida.module';
+import { RespostaModule } from './resposta/resposta.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -14,7 +15,8 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     UserModule,
     AuthModule,
-    PostModule,
+    DuvidaModule,
+    RespostaModule,
     JwtModule.register({
       global: true,
       secret: process.env.API_SECRET,

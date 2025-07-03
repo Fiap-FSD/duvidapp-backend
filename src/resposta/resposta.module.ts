@@ -24,4 +24,4 @@ import { PostController } from './controllers/post.controller';
         PostController,
     ]
 })
-export class PostModule {}
+export class RespostaModule {}
