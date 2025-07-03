@@ -63,8 +63,8 @@ A arquitetura segue o padrão **NestJS**, organizada em **Controller, Providers,
 #### Clone este repositório:
 
 ```bash
-git clone https://github.com/Fiap-FSD/tech-2.git
-cd blog-posts
+git clone git@github.com:Fiap-FSD/duvidapp-backend.git
+cd duvidapp
 ```
 
 #### Configure o ambiente:
@@ -74,7 +74,7 @@ Crie um arquivo `.env` na raiz do projeto e insira nele:
 ```bash
 PORT=3000
 API_SECRET=batman
-MONGO_URI=mongodb+srv://fiapfsd:SDHdwwa1MNK4GObi@blogposts.faa90.mongodb.net/?retryWrites=true&w=majority&appName=BlogPosts
+MONGO_URI=ATUALIZAR
 ```
 
 #### Rodando no Docker:
@@ -103,7 +103,7 @@ Utilizar APIs para criar o backend de um sistema de blog post oferece uma série
 A URL base para todas as requisições da API é a seguinte:
 
 ```http
-  https://blog-post-hori.onrender.com/
+  ATUALIZAR/
 ```
 
 #### Manual da API
@@ -111,11 +111,11 @@ A URL base para todas as requisições da API é a seguinte:
 As URLs do manual da API são as seguintes:
 
 ```http
-  https://blog-post-hori.onrender.com/api
+  ATUALIZAR/api
 ```
 
 ```http
-  https://blog-post-hori.onrender.com/docs
+  ATUALIZAR/docs
 ```
 
 - ##### AuthController_login - Utilizado para autenticar usuário
@@ -134,61 +134,60 @@ Este endpoint é utilizado para criar um novo usuário no sistema. Ele recebe o 
   POST URL/auth/register
 ```
 
-- ##### PostController_getAllPost - Obter todas as postagens
+- ##### DuvidaController_getAllDuvida - Obter todas as dúvidas
 
-Este endpoint é utilizado para obter todas as postagens do blog. Ele retorna uma lista completa de posts armazenados no banco de dados.
+Este endpoint é utilizado para obter todas as duvidas do blog. Ele retorna uma lista completa de dúvidas armazenadas no banco de dados.
 
 ```http
-  GET URL/post/
+  GET URL/duvida/
 ```
 
-- #####  PostController_searchPosts - Buscar postagens
+- #####  DuvidaController_searchDuvidas - Buscar dúvidas
 
 Este endpoint é utilizado para realizar uma pesquisa por posts com base em um critério específico (título ou conteúdo).
 
 ```http
-  GET URL/post/search/id
+  GET URL/duvida/search/id
 ```
 
-- ##### PostController_getPostById - Obter postagem específica
+- ##### DuvidaController_getDuvidaById - Obter dúvida específica
 
-Este endpoint é utilizado para recuperar uma postagem específica com base no ID fornecido.
+Este endpoint é utilizado para recuperar uma dúvida específica com base no ID fornecido.
 
 ```http
-  GET URL/post/id
+  GET URL/duvida/id
 ```
 
-- ##### PostController_createPost - Criar nova postagem
+- ##### DuvidaController_createDuvida - Criar nova dúvida
 
-Este endpoint é utilizado para criar uma nova postagem no blog.
+Este endpoint é utilizado para criar uma nova dúvida no blog.
 
 ```http
-  POST URL/post
+  POST URL/duvida
 ```
 
-- ##### PostController_updatePost - Editar postagem existente
+- ##### DuvidaController_updateDuvida - Editar dúvida existente
 
-Este endpoint é utilizado para editar uma postagem existente, fornecendo o ID da postagem a ser atualizada.
+Este endpoint é utilizado para editar uma dúvida existente, fornecendo o ID da dúvida a ser atualizada.
 
 ```http
-  PUT URL/post/id
+  PUT URL/duvida/id
 ```
 
-- ##### PostController_deletePost - Excluir postagem
+- ##### DuvidaController_deleteDuvida - Excluir postagem
 
 Este endpoint é utilizado para excluir uma postagem do blog.
 
 ```http
-  DELETE URL/post/id
+  DELETE URL/duvida/id
 ```
-## 🎥 Vídeo do Projeto
-👉 **[Link para o vídeo](https://youtu.be/ILa9iL7bAOs)**  
+
 
 ## 📜 Conclusão
 
-A refatoração do back-end do Blog Post trouxe melhorias significativas, tornando o sistema mais moderno, escalável e fácil de manter. A migração da plataforma OutSystems para uma arquitetura baseada em NestJS, REST APIs e MongoDB foi um grande avanço, proporcionando mais flexibilidade e controle no desenvolvimento.
+A construção do back-end do DuvidApp trouxe melhorias significativas, tornando o sistema mais moderno, escalável e fácil de manter. A migração de um monolito para uma arquitetura baseada em NestJS, REST APIs e MongoDB foi um grande avanço, proporcionando mais flexibilidade e controle no desenvolvimento. Além de tornar o projeto escalonável e de fácil modificação para microserviços.
 
 O uso de Docker e GitHub facilitou o gerenciamento do código e a colaboração entre os desenvolvedores, além de garantir consistência nos diferentes ambientes. As APIs RESTful ajudaram a separar o front-end do back-end, o que trouxe agilidade e facilitou a integração com outras plataformas.
 
-No entanto, o desenvolvimento não foi isento de desafios. A vinculação de várias tecnologias como Docker, MongoDB e Node.js exigiu um cuidado especial para garantir que todos os componentes funcionassem de forma integrada. A configuração do MongoDB e a criação de um ambiente Docker compatível com o sistema foram algumas das dificuldades encontradas, exigindo ajustes contínuos. Apesar desses desafios, a refatoração resultou em uma aplicação mais robusta e bem estruturada.
+No entanto, o desenvolvimento não foi isento de desafios. A vinculação de várias tecnologias como Docker, MongoDB e Nest.js com Node.js exigiu um cuidado especial para garantir que todos os componentes funcionassem de forma integrada. A configuração do MongoDB e a criação de um ambiente Docker compatível com o sistema foram algumas das dificuldades encontradas, exigindo ajustes contínuos. Apesar desses desafios, a construção resultou em uma aplicação mais robusta e bem estruturada.
 

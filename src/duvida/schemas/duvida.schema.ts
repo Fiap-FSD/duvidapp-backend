@@ -10,6 +10,8 @@ export class Duvida implements IDuvida {
   id?: string;
   @Prop()
   title: string;
+  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  // authorId: string;
   @Prop()
   author: string;
   @Prop()
@@ -17,9 +19,9 @@ export class Duvida implements IDuvida {
   @Prop()
   content: string;
   @Prop()
-  tags: string;
+  tags?: string; // tags?: string[];
   @Prop()
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export const DuvidaSchema = SchemaFactory.createForClass(Duvida);

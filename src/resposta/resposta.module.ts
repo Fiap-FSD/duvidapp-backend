@@ -1,27 +1,27 @@
-import { Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PostSchema, Post } from './schemas/post.schema';
-import { PostRepository } from './repositories/post.repository';
-import { PostMongooseRepository } from './repositories/mongoose/post.mongoose.repository';
-import { PostService } from './services/post.service';
-import { PostController } from './controllers/post.controller';
+import { RespostaSchema, Resposta } from './schemas/resposta.schema';
+import { RespostaRepository } from './repositories/resposta.repository';
+import { RespostaMongooseRepository } from './repositories/mongoose/resposta.mongoose.repository';
+import { RespostaService } from './services/resposta.service';
+import { RespostaController } from './controllers/resposta.controller';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{
-            name: Post.name,
-            schema: PostSchema,
-        }])
-    ],
-    providers: [
-        {
-            provide: PostRepository,
-            useClass: PostMongooseRepository,
-        },
-        PostService,
-    ],
-    controllers: [
-        PostController,
-    ]
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Resposta.name,
+        schema: RespostaSchema,
+      },
+    ]),
+  ],
+  providers: [
+    {
+      provide: RespostaRepository,
+      useClass: RespostaMongooseRepository,
+    },
+    RespostaService,
+  ],
+  controllers: [RespostaController],
 })
 export class RespostaModule {}
