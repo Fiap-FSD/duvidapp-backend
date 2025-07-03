@@ -33,7 +33,6 @@ A equipe utilizou as seguintes ferramentas durante o desenvolvimento do projeto:
 
 - **Render**: Foi utilizado o Render como plataforma de hospedagem, o que simplificou o processo de deploy e gerenciamento da aplicação. O Render forneceu uma infraestrutura que permitiu que a equipe se concentrasse no desenvolvimento, sem se preocupar com a administração de servidores. O uso do Render foi fundamental para otimizar o fluxo de trabalho, garantindo agilidade no deploy e confiabilidade na execução da aplicação.
 
-
 ## 🏗️ Arquitetura da Aplicação
 
 A arquitetura do projeto segue o padrão de **API RESTful**, que permite interações simples e claras entre o cliente e o servidor. A principal divisão da aplicação é composta por:
@@ -48,7 +47,6 @@ A arquitetura segue o padrão **NestJS**, organizada em **Controller, Providers,
 - **Controller**: Responsável pelo processamento das requisições HTTP e retorno de uma resposta para o client.
 - **Providers**: São classes que executam a lógica central da aplicação. Podem ser de vários tipos de classes, como services, repositories e helpers.
 - **Modules**: Organizam a aplicação de maneira modular e registram os componentes que ela utiliza. E cada módulo gerencia um conjunto específico de responsabilidades e pode importar ou exportar outros módulos para compartilhar funcionalidades.
-  
 
 ## 🚀 Como rodar o projeto
 
@@ -64,7 +62,7 @@ A arquitetura segue o padrão **NestJS**, organizada em **Controller, Providers,
 
 ```bash
 git clone git@github.com:Fiap-FSD/duvidapp-backend.git
-cd duvidapp
+cd duvidapp-backend
 ```
 
 #### Configure o ambiente:
@@ -73,7 +71,7 @@ Crie um arquivo `.env` na raiz do projeto e insira nele:
 
 ```bash
 PORT=3000
-API_SECRET=batman
+API_SECRET=superman
 MONGO_URI=ATUALIZAR
 ```
 
@@ -87,6 +85,7 @@ Para construir e rodar a aplicação com Docker, utilize os seguintes comandos:
 docker --version
 docker-compose --version
 ```
+
 - Construa e inicie os conteiners
 
 ```bash
@@ -96,7 +95,7 @@ docker-compose up
 
 ## 🌐 APIs
 
-Utilizar APIs para criar o backend de um sistema de blog post oferece uma série de vantagens que tornam a aplicação mais escalável, flexível e fácil de manter. Abaixo são apresentadas as requisições utilizadas pelo grupo: 
+Utilizar APIs para criar o backend de um sistema de blog post oferece uma série de vantagens que tornam a aplicação mais escalável, flexível e fácil de manter. Abaixo são apresentadas as requisições utilizadas pelo grupo:
 
 #### URL
 
@@ -120,7 +119,7 @@ As URLs do manual da API são as seguintes:
 
 - ##### AuthController_login - Utilizado para autenticar usuário
 
-Este endpoint é utilizado para realizar o login de um usuário já cadastrado e obter o token necessário para realizar operações protegidas (como **POST**, **PUT** e **DELETE**) na API.  
+Este endpoint é utilizado para realizar o login de um usuário já cadastrado e obter o token necessário para realizar operações protegidas (como **POST**, **PUT** e **DELETE**) na API.
 
 ```http
   POST URL/auth/login
@@ -142,7 +141,7 @@ Este endpoint é utilizado para obter todas as duvidas do blog. Ele retorna uma 
   GET URL/duvida/
 ```
 
-- #####  DuvidaController_searchDuvidas - Buscar dúvidas
+- ##### DuvidaController_searchDuvidas - Buscar dúvidas
 
 Este endpoint é utilizado para realizar uma pesquisa por posts com base em um critério específico (título ou conteúdo).
 
@@ -182,7 +181,6 @@ Este endpoint é utilizado para excluir uma postagem do blog.
   DELETE URL/duvida/id
 ```
 
-
 ## 📜 Conclusão
 
 A construção do back-end do DuvidApp trouxe melhorias significativas, tornando o sistema mais moderno, escalável e fácil de manter. A migração de um monolito para uma arquitetura baseada em NestJS, REST APIs e MongoDB foi um grande avanço, proporcionando mais flexibilidade e controle no desenvolvimento. Além de tornar o projeto escalonável e de fácil modificação para microserviços.
@@ -190,4 +188,3 @@ A construção do back-end do DuvidApp trouxe melhorias significativas, tornando
 O uso de Docker e GitHub facilitou o gerenciamento do código e a colaboração entre os desenvolvedores, além de garantir consistência nos diferentes ambientes. As APIs RESTful ajudaram a separar o front-end do back-end, o que trouxe agilidade e facilitou a integração com outras plataformas.
 
 No entanto, o desenvolvimento não foi isento de desafios. A vinculação de várias tecnologias como Docker, MongoDB e Nest.js com Node.js exigiu um cuidado especial para garantir que todos os componentes funcionassem de forma integrada. A configuração do MongoDB e a criação de um ambiente Docker compatível com o sistema foram algumas das dificuldades encontradas, exigindo ajustes contínuos. Apesar desses desafios, a construção resultou em uma aplicação mais robusta e bem estruturada.
-
