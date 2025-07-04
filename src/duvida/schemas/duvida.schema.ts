@@ -10,18 +10,18 @@ export class Duvida implements IDuvida {
   id?: string;
   @Prop()
   title: string;
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  // authorId: string;
-  @Prop()
-  author: string;
-  @Prop()
-  intro: string;
+  // @Prop()
+  // author: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  authorId: string;
   @Prop()
   content: string;
-  @Prop()
-  tags?: string; // tags?: string[];
-  @Prop()
-  imageUrl?: string;
+  @Prop({ type: [String], default: [] })
+  tags?: string[];
+  @Prop({ default: 0 })
+  viewing: number;
+  @Prop({ default: 0 })
+  likes: number;
 }
 
 export const DuvidaSchema = SchemaFactory.createForClass(Duvida);

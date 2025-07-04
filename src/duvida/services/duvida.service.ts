@@ -17,7 +17,11 @@ export class DuvidaService {
   }
 
   async createDuvida(duvida: IDuvida) {
-    return this.duvidaRepository.createDuvida(duvida);
+    return this.duvidaRepository.createDuvida({
+      ...duvida,
+      viewing: duvida.viewing ?? 0,
+      likes: duvida.likes ?? 0,
+    });
   }
 
   async updateDuvida(duvidaId: string, duvida: IDuvida) {

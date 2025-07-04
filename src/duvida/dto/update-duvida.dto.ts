@@ -8,18 +8,11 @@ export class UpdateDuvidaDto {
   id: string;
 
   @ApiProperty({
-    example: 'Minha primeira dúvida atualizado',
+    example: 'Minha dúvida atualizada.',
     description: 'Título atualizado da dúvida.',
     required: false,
   })
   title?: string;
-
-  @ApiProperty({
-    example: 'Uma introdução breve atualizada.',
-    description: 'Introdução atualizada da dúvida.',
-    required: false,
-  })
-  intro?: string;
 
   @ApiProperty({
     example: 'Aqui está o conteúdo atualizado.',
@@ -29,16 +22,25 @@ export class UpdateDuvidaDto {
   content?: string;
 
   @ApiProperty({
-    example: '#fisica #eletromagnetismo',
-    description: 'tags atualizadas de uma dúvida.',
+    example: ['javascript', 'react'],
+    description: 'Novas tags.',
     required: false,
+    isArray: true,
+    type: String,
   })
-  tags?: string;
+  tags?: string[];
 
   @ApiProperty({
-    example: 'https://meusite.com/imagem-nova.png',
-    description: 'URL atualizada de uma imagem.',
+    example: 3,
+    description: 'Atualização no número de visualizações.',
     required: false,
   })
-  imageUrl?: string;
+  viewing?: number;
+
+  @ApiProperty({
+    example: 62,
+    description: 'Atualização no número de likes.',
+    required: false,
+  })
+  likes?: number;
 }

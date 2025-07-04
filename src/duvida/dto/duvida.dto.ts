@@ -2,6 +2,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class DuvidaDto {
+
+  @ApiProperty({
+    example: '64ab123456ef7890123456aa',
+    description: 'ID do autor da dúvida.',
+  })
+  authorId: string;
+
   @ApiProperty({
     example: 'Minha primeira dúvida',
     description: 'Título da dúvida.',
@@ -9,28 +16,31 @@ export class DuvidaDto {
   title: string;
 
   @ApiProperty({
-    example: 'Uma introdução breve sobre o conteúdo.',
-    description: 'Uma introdução da dúvida.',
-  })
-  intro: string;
-
-  @ApiProperty({
-    example: 'Aqui está o conteúdo detalhado do meu post.',
-    description: 'O conteúdo completo da dúvida.',
+    example: 'Aqui está o conteúdo detalhado da minha dúvida.',
+    description: 'O conteúdo da dúvida.',
   })
   content: string;
 
   @ApiProperty({
-    example: 'https://meusite.com/imagem.png',
-    description: 'URL de uma imagem relacionada.',
+    example: ['matematica', 'funcao', 'derivada'],
+    description: 'Tags associadas à dúvida.',
     required: false,
+    isArray: true,
+    type: String,
   })
-  imageUrl?: string;
+  tags?: string[];
 
   @ApiProperty({
-    example: '#matematica #funcao #derivada',
-    description: 'tags da duvida relacionada.',
+    example: 5,
+    description: 'Número de visualizações.',
+    required: false,    
+  })
+  viewing?: number;
+
+  @ApiProperty({
+    example: 42,
+    description: 'Quantidade de curtidas.',
     required: false,
   })
-  tags?: string;
+  likes?: number;
 }

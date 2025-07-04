@@ -71,8 +71,8 @@ Crie um arquivo `.env` na raiz do projeto e insira nele:
 
 ```bash
 PORT=3000
-API_SECRET=superman
-MONGO_URI=ATUALIZAR
+API_SECRET=batman
+MONGO_URI=mongodb+srv://fiapfsd:SDHdwwa1MNK4GObi@blogposts.faa90.mongodb.net/?retryWrites=true&w=majority&appName=BlogPosts
 ```
 
 #### Rodando no Docker:

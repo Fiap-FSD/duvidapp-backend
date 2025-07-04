@@ -24,11 +24,10 @@ import { UpdateDuvidaDto } from '../dto/update-duvida.dto';
 
 const createDuvidaSchema = z.object({
   title: z.string(),
-  author: z.string(),
-  intro: z.string(),
   content: z.string(),
-  tags: z.string().optional(),
-  imageUrl: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  viewing: z.number().optional(),
+  likes: z.number().optional(),
 });
 
 type CreateDuvida = z.infer<typeof createDuvidaSchema>;
@@ -107,15 +106,14 @@ export class DuvidaController {
     description: 'A dúvida foi criada com sucesso.',
   })
   async createDuvida(
-    @Body() { title, author, content, intro, tags, imageUrl },
+    @Body() { title, content, tags, viewing, likes }: CreateDuvida,
   ) {
     return this.duvidaService.createDuvida({
       title,
-      author,
       content,
-      intro,
       tags,
-      imageUrl,
+      viewing,
+      likes,
     });
   }
 
@@ -139,15 +137,14 @@ export class DuvidaController {
   })
   async updateDuvida(
     @Param('duvidaId') duvidaId: string,
-    @Body() { title, author, content, intro, tags, imageUrl }: CreateDuvida,
+    @Body() {  title, content, tags, viewing, likes }: CreateDuvida,
   ) {
     return this.duvidaService.updateDuvida(duvidaId, {
       title,
-      author,
       content,
-      intro,
       tags,
-      imageUrl,
+      viewing,
+      likes,
     });
   }
 

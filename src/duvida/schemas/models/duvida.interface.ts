@@ -1,11 +1,10 @@
 export interface IDuvida {
   id?: string;
   title: string;
-  author: string;
-  // authorId: string; // ID do autor (aluno ou professor)
-  intro: string;
+  // author: string;
+  authorId?: string; // ID do autor (aluno ou professor)
   content: string;
-  tags?: string;
-  // tags?: string[];
-  imageUrl?: string;
+  tags?: string[];
+  viewing: number;
+  likes: number;
 }
