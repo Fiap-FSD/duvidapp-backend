@@ -10,10 +10,10 @@ export class Resposta implements IResposta {
   id?: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Duvida' })
   duvidaId?: string;
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  // authorId: string;
-  @Prop()
-  author: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  authorId?: string;
+  // @Prop()
+  // author: string;
   @Prop()
   content: string;
   @Prop({ default: false })

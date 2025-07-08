@@ -9,7 +9,7 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
+  // UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -18,7 +18,7 @@ import { z } from 'zod';
 import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
 import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
 import { ApiBearerAuth, ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { AuthGuard } from '../../shared/guards/auth.guard';
+// import { AuthGuard } from '../../shared/guards/auth.guard';
 import { DuvidaDto } from '../dto/duvida.dto';
 import { UpdateDuvidaDto } from '../dto/update-duvida.dto';
 
@@ -33,7 +33,7 @@ const createDuvidaSchema = z.object({
 type CreateDuvida = z.infer<typeof createDuvidaSchema>;
 
 @UseInterceptors(LoggingInterceptor)
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('duvida')
 export class DuvidaController {
   constructor(private readonly duvidaService: DuvidaService) {}

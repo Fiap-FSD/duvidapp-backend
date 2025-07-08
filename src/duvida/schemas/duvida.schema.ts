@@ -13,7 +13,7 @@ export class Duvida implements IDuvida {
   // @Prop()
   // author: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  authorId: string;
+  authorId?: string;
   @Prop()
   content: string;
   @Prop({ type: [String], default: [] })

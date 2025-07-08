@@ -23,7 +23,7 @@ import { RespostaDto } from '../dto/resposta.dto';
 import { UpdateRespostaDto } from '../dto/update-resposta.dto';
 
 const createRespostaSchema = z.object({
-  author: z.string(),
+  // author: z.string().optional(),
   content: z.string(),
   isVerified: z.boolean().default(false),
   votes: z.number().default(0),
@@ -74,10 +74,9 @@ export class RespostaController {
     description: 'A resposta foi criada com sucesso.',
   })
   async createResposta(
-    @Body() { author, content, isVerified, votes },
+    @Body() { content, isVerified, votes },
   ) {
-    return this.respostaService.createResposta({      
-      author,
+    return this.respostaService.createResposta({
       content,
       isVerified,
       votes,
@@ -104,10 +103,9 @@ export class RespostaController {
   })
   async updateResposta(
     @Param('respostaId') respostaId: string,
-    @Body() { author, content, isVerified, votes }: CreateResposta,
+    @Body() { content, isVerified, votes }: CreateResposta,
   ) {
     return this.respostaService.updateResposta(respostaId, {
-      author,
       content,
       isVerified,
       votes,

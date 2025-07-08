@@ -10,14 +10,16 @@ async function bootstrap() {
 
   // Habilitar o CORS para aceitar qualquer origem e permitir o cabeçalho Authorization (Bearer Token)
   app.enableCors({
-    origin: true,  // Permite qualquer origem (pode ser qualquer domínio)
+    origin: true, // Permite qualquer origem (pode ser qualquer domínio)
     methods: 'GET, POST, PUT, DELETE, PATCH', // Permite os métodos HTTP necessários
     allowedHeaders: 'Content-Type, Authorization', // Permite os cabeçalhos necessários, incluindo o Authorization
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Blog API')
-    .setDescription('API de Blogging')
+    .setTitle('DuvidApp API')
+    .setDescription(
+      'API de Banco de dúvidas colaborativas - sua dúvida tem vez e voz!!!',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();
