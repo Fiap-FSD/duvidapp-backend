@@ -5,6 +5,7 @@ import { DuvidaRepository } from './repositories/duvida.repository';
 import { DuvidaMongooseRepository } from './repositories/mongoose/duvida.mongoose.repository';
 import { DuvidaService } from './services/duvida.service';
 import { DuvidaController } from './controllers/duvida.controller';
+import { RespostaModule } from 'src/resposta/resposta.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DuvidaController } from './controllers/duvida.controller';
         schema: DuvidaSchema,
       },
     ]),
+    RespostaModule,
   ],
   providers: [
     {

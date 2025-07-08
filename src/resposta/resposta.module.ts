@@ -23,5 +23,6 @@ import { RespostaController } from './controllers/resposta.controller';
     RespostaService,
   ],
   controllers: [RespostaController],
+  exports: [RespostaRepository],
 })
 export class RespostaModule {}

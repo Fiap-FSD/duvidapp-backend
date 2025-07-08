@@ -72,7 +72,7 @@ Crie um arquivo `.env` na raiz do projeto e insira nele:
 ```bash
 PORT=3000
 API_SECRET=superman
-MONGO_URI=mongodb+srv://fiapfsd2:Fiapfsd123@@duvidapp.aqppqzi.mongodb.net/?retryWrites=true&w=majority&appName=DuvidApp
+MONGO_URI=mongodb+srv://fiap:JzfAaHW9@duvidapp.aqppqzi.mongodb.net/?retryWrites=true&w=majority&appName=DuvidApp
 ```
 
 #### Rodando no Docker:
