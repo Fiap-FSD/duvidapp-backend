@@ -3,6 +3,7 @@ import {
   ConflictException,
   NotFoundException,
   UnauthorizedException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../repositories/user.repository';
@@ -14,21 +15,25 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const { email, name, password, role } = createUserDto;
+    try {
+      const { email, name, password, role } = createUserDto;
+      const existingUser = await this.userRepository.findByEmail(email);
+      if (existingUser) {
+        throw new ConflictException('Este email já está em uso!');
+      }
 
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      throw new ConflictException('Este email já está em uso!');
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      return this.userRepository.createUser({
+        email,
+        name,
+        password: hashedPassword,
+        role,
+      });
+    } catch (error) {
+      console.error('Erro ao registrar usuário:', error);
+      throw new InternalServerErrorException('Erro ao registrar usuário');
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    return this.userRepository.createUser({
-      email,
-      name,
-      password: hashedPassword,
-      role,
-    });
   }
 
   async updateUser(userId: string, updateUserDto: UpdateUserDto) {

@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { UserService } from 'src/user/services/user.service';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ZodValidationPipe } from '@shared/pipe/zod-validation.pipe';
+import { CreateUserDto, createUserSchema } from 'src/user/dto/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -38,6 +40,7 @@ export class AuthController {
   }
 
   @Post('register')
+  @UsePipes(new ZodValidationPipe(createUserSchema))
   @ApiBody({
     description: 'login a ser criado.',
     schema: {
@@ -56,7 +59,7 @@ export class AuthController {
     status: 409,
     description: 'email em uso.',
   })
-  async register(@Body() body: { email: string; name: string; password: string; role: "admin" | "user"; }) {
-    return this.userService.createUser(body);
+  async register(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
   }
 }

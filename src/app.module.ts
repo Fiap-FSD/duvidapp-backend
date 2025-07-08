@@ -20,7 +20,7 @@ import { AuthModule } from './auth/auth.module';
     JwtModule.register({
       global: true,
       secret: process.env.API_SECRET,
-      signOptions: { expiresIn: '10m' },
+      signOptions: { expiresIn: '12h' },
     }),
   ],
 })

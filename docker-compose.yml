@@ -8,7 +8,7 @@ services:
       args:
         MONGO_URI: ${MONGO_URI}
         API_SECRET: ${API_SECRET}
-    container_name: api-container-hackathon
+    container_name: api-container-duvidapp
     ports:
       - '3000:3000'
     environment:
