@@ -7,14 +7,14 @@ import {
   Delete,
   UseGuards,
   UseInterceptors,
-  UsePipes,
+  // UsePipes,
   Query,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
-import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
-import { UpdateUserDto, updateUserSchema } from '../dto/update-user.dto';
+// import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @UseInterceptors(LoggingInterceptor)
 @UseGuards(AuthGuard)

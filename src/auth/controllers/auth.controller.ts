@@ -56,7 +56,7 @@ export class AuthController {
     status: 409,
     description: 'email em uso.',
   })
-  async register(@Body() body: { email: string; password: string }) {
+  async register(@Body() body: { email: string; name: string; password: string; role: "admin" | "user"; }) {
     return this.userService.createUser(body);
   }
 }
