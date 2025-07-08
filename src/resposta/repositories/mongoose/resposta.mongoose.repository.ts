@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { IResposta } from 'src/resposta/schemas/models/resposta.interface';
 import { RespostaRepository } from '../resposta.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Resposta } from 'src/resposta/schemas/resposta.schema';
 import { Model } from 'mongoose';
 
+@Injectable()
 export class RespostaMongooseRepository implements RespostaRepository {
   constructor(
     @InjectModel(Resposta.name) private respostaModel: Model<Resposta>,
@@ -14,7 +16,7 @@ export class RespostaMongooseRepository implements RespostaRepository {
   //   return this.respostaModel.find().skip(offset).limit(limit).exec();
   // }
   getRespostaById(respostaId: string): Promise<IResposta> {
-    return this.respostaModel.findById(respostaId).exec();
+    return this.respostaModel.findById(respostaId).lean().exec();
   }
   async createResposta(resposta: IResposta): Promise<void> {
     const createStock = new this.respostaModel(resposta);
@@ -33,6 +35,10 @@ export class RespostaMongooseRepository implements RespostaRepository {
 
   async deleteResposta(respostaId: string): Promise<void> {
     await this.respostaModel.deleteOne({ _id: respostaId }).exec();
+  }
+
+  async countByDuvidaId(duvidaId: string): Promise<number> {
+    return this.respostaModel.countDocuments({ duvidaId });
   }
 
   // async searchRespostas(keyword: string): Promise<IResposta[]> {

@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { IDuvida } from 'src/duvida/schemas/models/duvida.interface';
 import { DuvidaRepository } from '../duvida.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Duvida } from 'src/duvida/schemas/duvida.schema';
 import { Model } from 'mongoose';
 
+@Injectable()
 export class DuvidaMongooseRepository implements DuvidaRepository {
   constructor(@InjectModel(Duvida.name) private duvidaModel: Model<Duvida>) {}
   getAllDuvida(limit: number, page: number): Promise<IDuvida[]> {

@@ -43,4 +43,11 @@ export class DuvidaDto {
     required: false,
   })
   likes?: number;
+  
+  @ApiProperty({
+    example: 5,
+    description: 'Número de respostas relacionadas à dúvida.',
+    required: false,
+  })
+  respostaCount?: number;
 }

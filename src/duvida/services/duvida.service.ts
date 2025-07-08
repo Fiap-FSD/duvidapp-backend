@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { RespostaRepository } from 'src/resposta/repositories/resposta.repository';
 import { DuvidaRepository } from '../repositories/duvida.repository';
 import { IDuvida } from '../schemas/models/duvida.interface';
 
 @Injectable()
 export class DuvidaService {
-  constructor(private readonly duvidaRepository: DuvidaRepository) {}
+  constructor(
+    private readonly duvidaRepository: DuvidaRepository,
+    private readonly respostaRepository: RespostaRepository,
+  ) {}
 
   async getAllDuvida(limit: number, page: number) {
     return this.duvidaRepository.getAllDuvida(limit, page);
@@ -13,7 +17,13 @@ export class DuvidaService {
   async getDuvidaById(duvidaId: string) {
     const duvida = await this.duvidaRepository.getDuvidaById(duvidaId);
     if (!duvida) throw new NotFoundException('Duvida is not found');
-    return duvida;
+    const respostaCount =
+      await this.respostaRepository.countByDuvidaId(duvidaId);
+
+    return {
+      ...duvida,
+      respostaCount,
+    };
   }
 
   async createDuvida(duvida: IDuvida) {
