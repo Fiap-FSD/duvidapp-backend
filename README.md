@@ -71,8 +71,8 @@ Crie um arquivo `.env` na raiz do projeto e insira nele:
 
 ```bash
 PORT=3000
-API_SECRET=batman
-MONGO_URI=mongodb+srv://fiapfsd:SDHdwwa1MNK4GObi@blogposts.faa90.mongodb.net/?retryWrites=true&w=majority&appName=BlogPosts
+API_SECRET=superman
+MONGO_URI=mongodb+srv://fiapfsd2:Fiapfsd123@@duvidapp.aqppqzi.mongodb.net/?retryWrites=true&w=majority&appName=DuvidApp
 ```
 
 #### Rodando no Docker:
@@ -102,7 +102,7 @@ Utilizar APIs para criar o backend de um sistema de blog post oferece uma série
 A URL base para todas as requisições da API é a seguinte:
 
 ```http
-  ATUALIZAR/
+  URL/
 ```
 
 #### Manual da API
@@ -110,11 +110,11 @@ A URL base para todas as requisições da API é a seguinte:
 As URLs do manual da API são as seguintes:
 
 ```http
-  ATUALIZAR/api
+  URL/api
 ```
 
 ```http
-  ATUALIZAR/docs
+  URL/docs
 ```
 
 - ##### AuthController_login - Utilizado para autenticar usuário
