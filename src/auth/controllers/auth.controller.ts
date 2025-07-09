@@ -46,9 +46,17 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', example: 'marcelo@teste.com' },
+        email: { type: 'string', example: 'teste@teste.com' },
         password: { type: 'string', example: 'senha123' },
+        name: { type: 'string', example: 'Nome de exemplo' },
+        role: { 
+          type: 'string',
+          enum: ['admin', 'user'],
+          example: 'admin',
+          description: 'Tipo de usuário (admin ou user)' 
+        },
       },
+      required: ['email', 'password', 'name', 'role'],
     },
   })
   @ApiResponse({
