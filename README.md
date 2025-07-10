@@ -85,7 +85,7 @@ Para construir e rodar a aplicação com Docker, utilize os seguintes comandos:
 docker --version
 docker-compose --version
 ```
-
+  
 - Construa e inicie os conteiners
 
 ```bash
