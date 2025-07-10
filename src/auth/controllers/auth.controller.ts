@@ -68,8 +68,8 @@ export class AuthController {
     description: 'email em uso.',
   })
   async register(@Body() createUserDto: CreateUserDto) {
-    // return this.userService.createUser(createUserDto);
-
+  // Adicionando tratamento de erro no controller
+  // Isso é importante para capturar erros que podem ocorrer durante a criação do usuário
     try {
     console.log('Tentando criar usuário...');
     return await this.userService.createUser(createUserDto);
