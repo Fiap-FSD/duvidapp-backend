@@ -107,6 +107,8 @@ A URL base para todas as requisições da API é a seguinte:
 
 #### Manual da API
 
+### 
+
 As URLs do manual da API são as seguintes:
 
 ```http
