@@ -68,6 +68,15 @@ export class AuthController {
     description: 'email em uso.',
   })
   async register(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+    // return this.userService.createUser(createUserDto);
+
+    try {
+    console.log('Tentando criar usuário...');
+    return await this.userService.createUser(createUserDto);
+  } catch (error) {
+    console.error('ERRO NO CONTROLLER:', error);
+    // Lançar uma exceção HTTP para que o Nest a trate corretamente
+    throw error;
+  }
   }
 }

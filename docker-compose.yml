@@ -17,6 +17,7 @@ services:
       - API_SECRET=${API_SECRET}
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     restart: unless-stopped
 
  
