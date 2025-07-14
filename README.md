@@ -6,16 +6,18 @@
   <img src="https://github.com/Fiap-FSD/tech-2/blob/development/Fiap-logo.jpg" width="300" /></a>
 </p>
 
-# ✨ Refatoração do Back-End do Blog Post
+# ✨Back-End de DuvidApp
 
-Este documento descreve o processo de desenvolvimento do refatoramento da parte Back-End do blog post. A aplicação foi inicialmente desenvolvida utilizando a plataforma OutSystems. Para esta nova etapa, o back-end da aplicação foi refatorado utilizando Node.js, utilizando o framkework NestJS, REST APIs, GitHub, Docker e MongoDB para persistência de dados.
+Este documento descreve o processo de desenvolvimento da construção da parte de Back-End do DuvidApp. Um app criado como uma plataforma educacional colaborativa voltada para alunos e professores da rede pública brasileira. Inspirado em fóruns como o Stack Overflow, o sistema será estruturado como um ambiente de perguntas e respostas, no qual os estudantes poderão publicar dúvidas relacionadas aos conteúdos escolares, receber respostas de colegas ou professores, e votar nas contribuições mais úteis.
+
+A aplicação foi construída utilizando Node.js, utilizando o framkework NestJS, REST APIs, GitHub, Docker e MongoDB para persistência de dados.
 
 Será apresentada a maneira de execução de cada step do projeto contendo informações cruciais sobre como configurar, usar e contribuir com o projeto.
 
 ## 🎯 Objetivos do Projeto
 
-- Refatorar o back-end da aplicação de blogging para professores, e alunos, utilizando Node.js.
-- Implementação de uma API RESTful com endpoints definidos para a criação, leitura, edição, exclusão e busca de postagens.
+- Contrução do back-end da aplicação de dúvidas e respostas colaborativas para professores, e alunos, utilizando Node.js.
+- Implementação de uma API RESTful com endpoints definidos para a criação, leitura, edição, exclusão e busca de dúvidas e respostas. Além de usuários com autenticação e senha criptografada.
 - Utilizar MongoDB como banco de dados para persistência dos dados.
 - Utilizar Docker para garantir consistência, escalabilidade e facilitar o deploy do projeto.
 
@@ -48,7 +50,7 @@ A arquitetura segue o padrão **NestJS**, organizada em **Controller, Providers,
 - **Providers**: São classes que executam a lógica central da aplicação. Podem ser de vários tipos de classes, como services, repositories e helpers.
 - **Modules**: Organizam a aplicação de maneira modular e registram os componentes que ela utiliza. E cada módulo gerencia um conjunto específico de responsabilidades e pode importar ou exportar outros módulos para compartilhar funcionalidades.
 
-## 🚀 Como rodar o projeto
+## 🚀 Como rodar o projeto - Localmente
 
 ### Pré-requisitos
 
@@ -79,44 +81,40 @@ MONGO_URI=mongodb+srv://fiap:JzfAaHW9@duvidapp.aqppqzi.mongodb.net/?retryWrites=
 
 Para construir e rodar a aplicação com Docker, utilize os seguintes comandos:
 
-- Verifique o docker e docker compose
+- Verifique o docker
 
 ```bash
 docker --version
-docker-compose --version
 ```
   
 - Construa e inicie os conteiners
 
 ```bash
-docker-compose build
-docker-compose up
+docker build -t api-container-duvidapp
 ```
 
 ## 🌐 APIs
 
-Utilizar APIs para criar o backend de um sistema de blog post oferece uma série de vantagens que tornam a aplicação mais escalável, flexível e fácil de manter. Abaixo são apresentadas as requisições utilizadas pelo grupo:
+Utilizar APIs para criar o backend de um sistema de duvidas colaborativas oferece uma série de vantagens que tornam a aplicação mais escalável, flexível e fácil de manter. Abaixo são apresentadas as requisições utilizadas pelo grupo:
 
 #### URL
 
 A URL base para todas as requisições da API é a seguinte:
 
 ```http
-  URL/
+  https://duvidapp.onrender.com/
 ```
 
-#### Manual da API
-
-### 
+### 📃 Manual da API 
 
 As URLs do manual da API são as seguintes:
 
 ```http
-  URL/api
+  https://duvidapp.onrender.com/api
 ```
 
 ```http
-  URL/docs
+  https://duvidapp.onrender.com/docs
 ```
 
 - ##### AuthController_login - Utilizado para autenticar usuário
@@ -124,7 +122,7 @@ As URLs do manual da API são as seguintes:
 Este endpoint é utilizado para realizar o login de um usuário já cadastrado e obter o token necessário para realizar operações protegidas (como **POST**, **PUT** e **DELETE**) na API.
 
 ```http
-  POST URL/auth/login
+  POST https://duvidapp.onrender.com/auth/login
 ```
 
 - ##### AuthController_register - Utilizado para criar usuário
@@ -132,23 +130,25 @@ Este endpoint é utilizado para realizar o login de um usuário já cadastrado e
 Este endpoint é utilizado para criar um novo usuário no sistema. Ele recebe o email e senha (criptografada) do usuário e cria um registro no banco de dados.
 
 ```http
-  POST URL/auth/register
+  POST https://duvidapp.onrender.com/auth/register
 ```
+
+#### Duvidas:
 
 - ##### DuvidaController_getAllDuvida - Obter todas as dúvidas
 
-Este endpoint é utilizado para obter todas as duvidas do blog. Ele retorna uma lista completa de dúvidas armazenadas no banco de dados.
+Este endpoint é utilizado para obter todas as duvidas do app. Ele retorna uma lista completa de dúvidas armazenadas no banco de dados.
 
 ```http
-  GET URL/duvida/
+  GET https://duvidapp.onrender.com/duvida/
 ```
 
 - ##### DuvidaController_searchDuvidas - Buscar dúvidas
 
-Este endpoint é utilizado para realizar uma pesquisa por posts com base em um critério específico (título ou conteúdo).
+Este endpoint é utilizado para realizar uma pesquisa por dúvidas com base em um critério específico (título, tags ou conteúdo).
 
 ```http
-  GET URL/duvida/search/id
+  GET https://duvidapp.onrender.com/duvida/search/id
 ```
 
 - ##### DuvidaController_getDuvidaById - Obter dúvida específica
@@ -156,7 +156,7 @@ Este endpoint é utilizado para realizar uma pesquisa por posts com base em um c
 Este endpoint é utilizado para recuperar uma dúvida específica com base no ID fornecido.
 
 ```http
-  GET URL/duvida/id
+  GET https://duvidapp.onrender.com/duvida/id
 ```
 
 - ##### DuvidaController_createDuvida - Criar nova dúvida
@@ -164,7 +164,7 @@ Este endpoint é utilizado para recuperar uma dúvida específica com base no ID
 Este endpoint é utilizado para criar uma nova dúvida no blog.
 
 ```http
-  POST URL/duvida
+  POST https://duvidapp.onrender.com/duvida
 ```
 
 - ##### DuvidaController_updateDuvida - Editar dúvida existente
@@ -172,15 +172,65 @@ Este endpoint é utilizado para criar uma nova dúvida no blog.
 Este endpoint é utilizado para editar uma dúvida existente, fornecendo o ID da dúvida a ser atualizada.
 
 ```http
-  PUT URL/duvida/id
+  PUT https://duvidapp.onrender.com/duvida/id
 ```
 
-- ##### DuvidaController_deleteDuvida - Excluir postagem
+- ##### DuvidaController_deleteDuvida - Excluir dúvida
 
 Este endpoint é utilizado para excluir uma postagem do blog.
 
 ```http
-  DELETE URL/duvida/id
+  DELETE https://duvidapp.onrender.com/duvida/id
+```
+
+#### Respostas:
+
+- ##### RespostaController_getAllResposta - Obter todas as Respostas relacionados a uma dúvida
+
+Este endpoint é utilizado para obter todas as respostas relacionadas a uma dúvida do app. Ele retorna uma lista completa de respostas relacionadas a uma dúvida armazenadas no banco de dados.
+
+```http
+  GET https://duvidapp.onrender.com/resposta/
+```
+
+- ##### RespostaController_searchRespostas - Buscar resposta
+
+Este endpoint é utilizado para realizar uma pesquisa por respostas com base em um critério específico (título ou conteúdo).
+
+```http
+  GET https://duvidapp.onrender.com/resposta/search/id
+```
+
+- ##### RespostaController_getRespostaById - Obter resposta específica
+
+Este endpoint é utilizado para recuperar uma resposta específica com base no ID fornecido.
+
+```http
+  GET https://duvidapp.onrender.com/resposta/id
+```
+
+- ##### RespostaController_createDuvida - Criar nova resposta 
+
+Este endpoint é utilizado para criar uma nova resposta no app.
+
+```http
+  POST https://duvidapp.onrender.com/resposta
+```
+
+- ##### RespostaController_updateDuvida - Editar resposta existente
+
+Este endpoint é utilizado para editar uma resposta existente, fornecendo o ID da resposta a ser atualizada.
+
+```http
+  PUT https://duvidapp.onrender.com/resposta/id
+```
+
+- ##### RespostaController_deleteDuvida - Excluir resposta
+
+Este endpoint é utilizado para excluir uma resposta do app.
+
+```http
+  DELETE https://duvidapp.onrender.com/resposta/id
 ```
 
 ## 📜 Conclusão
