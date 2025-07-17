@@ -1,27 +1,29 @@
 import { Module } from '@nestjs/common';
-import { DuvidaModule } from './duvida/duvida.module';
-import { RespostaModule } from './resposta/resposta.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { DuvidaModule } from './duvida/duvida.module';
+import { RespostaModule } from './resposta/resposta.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    // CORREÇÃO 1: Usar forRootAsync para o Mongoose
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+    }),
     UserModule,
-    AuthModule,
+    AuthModule, // O AuthModule já configura e provê o JwtModule
     DuvidaModule,
     RespostaModule,
-    JwtModule.register({
-      global: true,
-      secret: process.env.API_SECRET,
-      signOptions: { expiresIn: '12h' },
-    }),
+    // CORREÇÃO 2: O bloco do JwtModule.register foi REMOVIDO daqui
   ],
 })
 export class AppModule {}
