@@ -90,7 +90,16 @@ docker --version
 - Construa e inicie os conteiners
 
 ```bash
-docker build -t api-container-duvidapp
+docker build -t api-imagem-duvidapp
+```
+
+- Após rode passando os valores do .env e o nome do container
+
+```bash
+docker run -d --name api-container-duvidapp -p 3000:3000 \
+  -e MONGO_URI=mongodb+srv://fiap:JzfAaHW9@duvidapp.aqppqzi.mongodb.net/?retryWrites=true&w=majority&appName=DuvidApp \
+  -e API_SECRET=superman \
+  api-imagem-duvidapp
 ```
 
 ## 🌐 APIs
@@ -235,7 +244,7 @@ Este endpoint é utilizado para excluir uma resposta do app.
 
 ## 📜 Conclusão
 
-A construção do back-end do DuvidApp trouxe melhorias significativas, tornando o sistema mais moderno, escalável e fácil de manter. A migração de um monolito para uma arquitetura baseada em NestJS, REST APIs e MongoDB foi um grande avanço, proporcionando mais flexibilidade e controle no desenvolvimento. Além de tornar o projeto escalonável e de fácil modificação para microserviços.
+A construção do back-end do DuvidApp é em um sistema mais moderno, escalável e fácil de manter. A migração de um monolito para uma arquitetura baseada em NestJS, REST APIs e MongoDB foi um grande avanço, proporcionando mais flexibilidade e controle no desenvolvimento. Além de tornar o projeto escalonável e de fácil modificação para microserviços.
 
 O uso de Docker e GitHub facilitou o gerenciamento do código e a colaboração entre os desenvolvedores, além de garantir consistência nos diferentes ambientes. As APIs RESTful ajudaram a separar o front-end do back-end, o que trouxe agilidade e facilitou a integração com outras plataformas.
 
