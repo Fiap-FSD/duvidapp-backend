@@ -1,7 +1,7 @@
 import { IResposta } from '../schemas/models/resposta.interface';
 
 export abstract class RespostaRepository {
-  // abstract getAllResposta(limit: number, page: number): Promise<IResposta[]>;
+  abstract getAllRespostaFromDuvida(duvidaId: string): Promise<IResposta[]>;
   abstract getRespostaById(respostaId: string): Promise<IResposta>;
   abstract createResposta(resposta: IResposta): Promise<void>;
   abstract updateResposta(
@@ -10,5 +10,5 @@ export abstract class RespostaRepository {
   ): Promise<IResposta>;
   abstract deleteResposta(respostaId: string): Promise<void>;
   abstract countByDuvidaId(duvidaId: string): Promise<number>;
-  // abstract searchRespostas(keyword: string): Promise<IResposta[]>;
+  abstract searchRespostas(keyword: string): Promise<IResposta[]>;
 }
