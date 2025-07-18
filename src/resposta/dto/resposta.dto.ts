@@ -3,6 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class RespostaDto {
   @ApiProperty({
+    example: '64ab123456ef7890123456aa',
+    description: 'ID da dúvida à qual esta resposta pertence.', 
+  })
+  duvidaId: string; 
+  
+  @ApiProperty({
     example: 'Minha primeira resposta',
     description: 'Título da resposta.',
   })
