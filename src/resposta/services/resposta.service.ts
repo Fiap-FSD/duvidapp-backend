@@ -6,9 +6,13 @@ import { IResposta } from '../schemas/models/resposta.interface';
 export class RespostaService {
   constructor(private readonly respostaRepository: RespostaRepository) {}
 
-  // async getAllResposta(limit: number, page: number) {
-  //   return this.respostaRepository.getAllResposta(limit, page);
-  // }
+  async getAllRespostaFromDuvida(duvidaId: string) {
+    const respostas = await this.respostaRepository.getAllRespostaFromDuvida(duvidaId);
+    if (!respostas || respostas.length === 0) {
+      throw new NotFoundException('Nenhuma resposta encontrada para esta dúvida.');
+    }
+    return respostas;
+  }
 
   async getRespostaById(respostaId: string) {
     const resposta = await this.respostaRepository.getRespostaById(respostaId);
@@ -33,7 +37,7 @@ export class RespostaService {
     return this.respostaRepository.deleteResposta(respostaId);
   }
 
-  // async searchRespostas(keyword: string) {
-  //   return this.respostaRepository.searchRespostas(keyword);
-  // }
+  async searchRespostas(keyword: string) {
+    return this.respostaRepository.searchRespostas(keyword);
+  }
 }
