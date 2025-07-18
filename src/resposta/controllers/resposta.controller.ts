@@ -37,14 +37,22 @@ type CreateResposta = z.infer<typeof createRespostaSchema>;
 export class RespostaController {
   constructor(private readonly respostaService: RespostaService) {}
 
-  // @Get()
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'respostas retornadas.',
-  // })
-  // async getAllPost(@Query('limit') limit: number, @Query('page') page: number) {
-  //   return this.respostaService.getAllPost(limit, page);
-  // }
+  @Get('/:duvidaId')
+  @ApiQuery({
+    name: 'duvidaId',
+    description: 'ID da dúvida para buscar respostas relacionadas.',
+    required: true,
+    example: '6686b8d920149a1874cf7123',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de respostas relacionadas à dúvida.',
+    type: RespostaDto,
+    isArray: true,
+  })
+  async getAllRespostaFromDuvida(@Param('duvidaId') duvidaId: string) {
+    return this.respostaService.getAllRespostaFromDuvida(duvidaId);
+  }
 
   @Get(':respostaId')
   @ApiQuery({
@@ -126,34 +134,35 @@ export class RespostaController {
     return this.respostaService.deleteResposta(respostaId);
   }
   
-  // @Get('search')
-  // @ApiQuery({
-  //   name: 'keyword',
-  //   description:
-  //     'Palavra-chave usada para buscar respostas pelo conteúdo.',
-  //   required: true,
-  //   example: 'Resposta',
-  // })
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'A resposta foi encontrada com sucesso.',
-  //   type: RespostaDto,
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description: 'O ID fornecido é inválido ou está vazio.',
-  //   schema: {
-  //     example: {
-  //       statusCode: 400,
-  //       message: 'Keyword must be provided.',
-  //       error: 'Bad Request',
-  //     },
-  //   },
-  // })
-  // async searchRespostas(@Query('keyword') keyword: string) {
-  //   if (!keyword || keyword.trim() === '') {
-  //     throw new BadRequestException('Keyword must be provided');
-  //   }
-  //   return this.respostaService.searchRespostas(keyword);
-  // }
+  @Get('search')
+  @ApiQuery({
+    name: 'keyword',
+    description:
+      'Palavra-chave usada para buscar respostas pelo conteúdo.',
+    required: true,
+    example: 'Resposta',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'A resposta foi encontrada com sucesso.',
+    type: RespostaDto,
+    isArray: true,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'O ID fornecido é inválido ou está vazio.',
+    schema: {
+      example: {
+        statusCode: 400,
+        message: 'Keyword must be provided.',
+        error: 'Bad Request',
+      },
+    },
+  })
+  async searchRespostas(@Query('keyword') keyword: string) {
+    if (!keyword || keyword.trim() === '') {
+      throw new BadRequestException('Keyword must be provided');
+    }
+    return this.respostaService.searchRespostas(keyword);
+  }
 }
