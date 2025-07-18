@@ -10,11 +10,9 @@ export class RespostaMongooseRepository implements RespostaRepository {
   constructor(
     @InjectModel(Resposta.name) private respostaModel: Model<Resposta>,
   ) {}
-  // getAllResposta(limit: number, page: number): Promise<IResposta[]> {
-  //   const offset = (page - 1) * limit;
-
-  //   return this.respostaModel.find().skip(offset).limit(limit).exec();
-  // }
+  async getAllRespostaFromDuvida(duvidaId: string): Promise<IResposta[]> {
+    return this.respostaModel.find({ duvidaId: duvidaId }).lean().exec();
+  }
   getRespostaById(respostaId: string): Promise<IResposta> {
     return this.respostaModel.findById(respostaId).lean().exec();
   }
@@ -41,12 +39,12 @@ export class RespostaMongooseRepository implements RespostaRepository {
     return this.respostaModel.countDocuments({ duvidaId });
   }
 
-  // async searchRespostas(keyword: string): Promise<IResposta[]> {
-  //   const searchRegex = new RegExp(keyword, 'i'); // 'i' para case-insensitive
-  //   return this.respostaModel
-  //     .find({
-  //       $or: [{ title: searchRegex }, { content: searchRegex }],
-  //     })
-  //     .exec();
-  // }
+  async searchRespostas(keyword: string): Promise<IResposta[]> {
+     const searchRegex = new RegExp(keyword, 'i'); // 'i' para case-insensitive
+     return this.respostaModel
+       .find({
+         $or: [{ content: searchRegex }],
+       })
+       .exec();
+  }
 }
