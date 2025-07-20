@@ -35,7 +35,7 @@ A equipe utilizou as seguintes ferramentas durante o desenvolvimento do projeto:
 
 - **Render**: Foi utilizado o Render como plataforma de hospedagem, o que simplificou o processo de deploy e gerenciamento da aplicação. O Render forneceu uma infraestrutura que permitiu que a equipe se concentrasse no desenvolvimento, sem se preocupar com a administração de servidores. O uso do Render foi fundamental para otimizar o fluxo de trabalho, garantindo agilidade no deploy e confiabilidade na execução da aplicação.
 
-## 🏗️ Arquitetura da Aplicação
+## 🏗️ Arquitetura da Aplicação 
 
 A arquitetura do projeto segue o padrão de **API RESTful**, que permite interações simples e claras entre o cliente e o servidor. A principal divisão da aplicação é composta por:
 
