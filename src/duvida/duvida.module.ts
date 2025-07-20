@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DuvidaSchema, Duvida } from './schemas/duvida.schema';
 import { DuvidaRepository } from './repositories/duvida.repository';
 import { DuvidaMongooseRepository } from './repositories/mongoose/duvida.mongoose.repository';
 import { DuvidaService } from './services/duvida.service';
 import { DuvidaController } from './controllers/duvida.controller';
-import { RespostaModule } from 'src/resposta/resposta.module';
+import { RespostaModule } from '../resposta/resposta.module';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { RespostaModule } from 'src/resposta/resposta.module';
         schema: DuvidaSchema,
       },
     ]),
-    RespostaModule,
+    forwardRef(() => RespostaModule),
   ],
   providers: [
     {
@@ -25,5 +25,6 @@ import { RespostaModule } from 'src/resposta/resposta.module';
     DuvidaService,
   ],
   controllers: [DuvidaController],
+  exports: [DuvidaRepository],
 })
 export class DuvidaModule {}

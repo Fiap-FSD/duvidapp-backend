@@ -1,18 +1,16 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
+// O import do JwtModule não é mais necessário aqui
 
 @Module({
   imports: [
     UserModule,
-    JwtModule.register({
-      secret: process.env.API_SECRET,
-      signOptions: { expiresIn: '12h' },
-    }),
+    // REMOVA o JwtModule.register daqui. Já é global.
   ],
   providers: [AuthService],
   controllers: [AuthController],
+  
 })
 export class AuthModule {}

@@ -1,168 +1,154 @@
 /* eslint-disable prettier/prettier */
 import {
-  // BadRequestException,
-  Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
   Put,
-  // Query,
+  Request,
   UseGuards,
-  UseInterceptors,
-  UsePipes,
+  Patch,
+  Body,
+  Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { RespostaService } from '../services/resposta.service';
-import { z } from 'zod';
-import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
-import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
-import { ApiBearerAuth, ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '../../shared/guards/auth.guard';
-import { RespostaDto } from '../dto/resposta.dto';
+import { RolesGuard } from '../../shared/guards/roles.guard';
+import { Roles } from '../../shared/decorators/roles.decorator';
+import { ApiBearerAuth, ApiResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { CreateRespostaDto } from '../dto/create-resposta.dto';
 import { UpdateRespostaDto } from '../dto/update-resposta.dto';
 
-const createRespostaSchema = z.object({
-  // author: z.string().optional(),
-  content: z.string(),
-  isVerified: z.boolean().default(false),
-  votes: z.number().default(0),
-});
-
-type CreateResposta = z.infer<typeof createRespostaSchema>;
-
-@UseInterceptors(LoggingInterceptor)
-@UseGuards(AuthGuard)
+@ApiTags('Respostas')
 @Controller('resposta')
 export class RespostaController {
   constructor(private readonly respostaService: RespostaService) {}
 
-  @Get('/:duvidaId')
-  @ApiQuery({
-    name: 'duvidaId',
-    description: 'ID da dúvida para buscar respostas relacionadas.',
-    required: true,
-    example: '6686b8d920149a1874cf7123',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Lista de respostas relacionadas à dúvida.',
-    type: RespostaDto,
-    isArray: true,
-  })
+  // GET - Buscar todas as respostas de uma dúvida
+  @Get(':duvidaId')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obter todas as respostas de uma dúvida' })
+  @ApiResponse({ status: 200, description: 'Respostas encontradas com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Nenhuma resposta encontrada para esta dúvida.' })
   async getAllRespostaFromDuvida(@Param('duvidaId') duvidaId: string) {
     return this.respostaService.getAllRespostaFromDuvida(duvidaId);
   }
 
-  @Get(':respostaId')
-  @ApiQuery({
-    name: 'respostaId',
-    description: 'ID de uma resposta.',
-    required: true,
-    example: '67886b8d920149a1874cf70',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'A resposta foi encontrada com sucesso.',
-    type: RespostaDto,
-  })
+  // GET - Buscar resposta por ID
+  @Get('single/:respostaId')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obter uma resposta específica por ID' })
+  @ApiResponse({ status: 200, description: 'Resposta encontrada com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
   async getRespostaById(@Param('respostaId') respostaId: string) {
     return this.respostaService.getRespostaById(respostaId);
   }
 
-  @ApiBearerAuth()
-  @UsePipes(new ZodValidationPipe(createRespostaSchema))
+  // POST - Criar nova resposta
   @Post()
-  @ApiBody({
-    description: 'Dados para criar uma nova resposta.',
-    type: RespostaDto,
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'A resposta foi criada com sucesso.',
-  })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Criar uma nova resposta' })
+  @ApiResponse({ status: 201, description: 'Resposta criada com sucesso.' })
+  @ApiResponse({ status: 400, description: 'Dados inválidos.' })
+  @ApiResponse({ status: 401, description: 'Usuário não autenticado.' })
   async createResposta(
-    @Body() { content, isVerified, votes },
+    @Body() createRespostaDto: CreateRespostaDto,
+    @Request() req,
   ) {
-    return this.respostaService.createResposta({
-      content,
-      isVerified,
-      votes,
-    });
+    return this.respostaService.createResposta(createRespostaDto, req.user);
   }
 
-  @ApiBearerAuth()
+  // PUT - Atualizar resposta
   @Put(':respostaId')
-  @ApiBody({
-    description: 'Resposta de exemplo para ser editada.',
-    type: UpdateRespostaDto,
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'A resposta foi editada com sucesso.',
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad request.',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized.',
-  })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('Admin')
+  @ApiOperation({ summary: 'Atualizar uma resposta (apenas Admin)' })
+  @ApiResponse({ status: 200, description: 'Resposta atualizada com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
+  @ApiResponse({ status: 403, description: 'Acesso negado.' })
   async updateResposta(
     @Param('respostaId') respostaId: string,
-    @Body() { content, isVerified, votes }: CreateResposta,
+    @Body() updateRespostaDto: UpdateRespostaDto,
   ) {
-    return this.respostaService.updateResposta(respostaId, {
-      content,
-      isVerified,
-      votes,
-    });
+    return this.respostaService.updateResposta(respostaId, updateRespostaDto);
   }
 
-  @ApiBearerAuth()
+  // DELETE - Deletar resposta
   @Delete(':respostaId')
-  @ApiResponse({
-    status: 200,
-    description: 'A resposta foi deletada com sucesso.',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized.',
-  })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('Admin')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Deletar uma resposta (apenas Admin)' })
+  @ApiResponse({ status: 204, description: 'Resposta deletada com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
+  @ApiResponse({ status: 403, description: 'Acesso negado.' })
   async deleteResposta(@Param('respostaId') respostaId: string) {
     return this.respostaService.deleteResposta(respostaId);
   }
-  
-  @Get('search')
-  @ApiQuery({
-    name: 'keyword',
-    description:
-      'Palavra-chave usada para buscar respostas pelo conteúdo.',
-    required: true,
-    example: 'Resposta',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'A resposta foi encontrada com sucesso.',
-    type: RespostaDto,
-    isArray: true,
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'O ID fornecido é inválido ou está vazio.',
-    schema: {
-      example: {
-        statusCode: 400,
-        message: 'Keyword must be provided.',
-        error: 'Bad Request',
-      },
-    },
-  })
-  async searchRespostas(@Query('keyword') keyword: string) {
-    if (!keyword || keyword.trim() === '') {
-      throw new BadRequestException('Keyword must be provided');
-    }
+
+  // GET - Buscar respostas por palavra-chave
+  @Get('search/:keyword')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Buscar respostas por palavra-chave' })
+  @ApiResponse({ status: 200, description: 'Busca realizada com sucesso.' })
+  async searchRespostas(@Param('keyword') keyword: string) {
     return this.respostaService.searchRespostas(keyword);
   }
+
+  // PATCH - Verificar uma resposta como melhor resposta
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Patch(':respostaId/verify')
+  @ApiOperation({ summary: 'Marcar resposta como melhor resposta' })
+  @ApiResponse({ status: 200, description: 'Resposta verificada com sucesso.' })
+  @ApiResponse({ status: 403, description: 'Apenas o autor da dúvida pode verificar uma resposta.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
+  async verifyAnswer(
+    @Request() req,
+    @Param('respostaId') respostaId: string,
+  ) {
+    const userId = req.user.userId;
+    return this.respostaService.verifyAnswer(respostaId, userId);
+  }
+
+  // PATCH - Dar like em uma resposta
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Patch(':respostaId/like')
+  @ApiOperation({ summary: 'Dar like em uma resposta' })
+  @ApiResponse({ status: 200, description: 'Like registrado com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
+  async likeResposta(
+    @Request() req,
+    @Param('respostaId') respostaId: string,
+  ) {
+    const userId = req.user.userId;
+    return this.respostaService.likeResposta(respostaId, userId);
+  }
+
+  // PATCH - Dar dislike em uma resposta
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Patch(':respostaId/dislike')
+  @ApiOperation({ summary: 'Dar dislike em uma resposta' })
+  @ApiResponse({ status: 200, description: 'Dislike registrado com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Resposta não encontrada.' })
+  async dislikeResposta(
+    @Request() req,
+    @Param('respostaId') respostaId: string,
+  ) {
+    const userId = req.user.userId;
+    return this.respostaService.dislikeResposta(respostaId, userId);
+  }
 }
+

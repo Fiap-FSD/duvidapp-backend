@@ -11,4 +11,8 @@ export abstract class RespostaRepository {
   abstract deleteResposta(respostaId: string): Promise<void>;
   abstract countByDuvidaId(duvidaId: string): Promise<number>;
   abstract searchRespostas(keyword: string): Promise<IResposta[]>;
+  abstract likeResposta(respostaId: string, userId: string): Promise<IResposta>;
+  abstract dislikeResposta(respostaId: string, userId: string): Promise<IResposta>;
+  abstract removeLikeResposta(respostaId: string, userId: string): Promise<IResposta>;
+  abstract removeDislikeResposta(respostaId: string, userId: string): Promise<IResposta>;
 }

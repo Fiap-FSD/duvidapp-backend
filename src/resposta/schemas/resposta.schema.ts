@@ -1,25 +1,40 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import { IResposta } from './models/resposta.interface';
-import mongoose, { HydratedDocument } from 'mongoose';
-
-export type RespostaDocument = HydratedDocument<Resposta>;
 
 @Schema({ timestamps: true })
-export class Resposta implements IResposta {
-  @Prop({ type: mongoose.Schema.Types.ObjectId })
-  id?: string;
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Duvida' })
-  duvidaId?: string;
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  authorId?: string;
-  // @Prop()
-  // author: string;
-  @Prop()
+export class Resposta extends Document implements IResposta {
+  @Prop({ required: true })
+  duvidaId: string;
+
+  @Prop({ required: true })
+  authorId: string;
+
+  // **PROPRIEDADE ADICIONADA**
+  // Adicionamos o authorName aqui para corresponder à interface.
+  @Prop({ required: true })
+  authorName: string;
+
+  @Prop({ required: true })
   content: string;
+
   @Prop({ default: false })
   isVerified: boolean;
+
   @Prop({ default: 0 })
   votes: number;
+
+  @Prop({ default: 0 })
+  likes: number;
+
+  @Prop({ default: 0 })
+  dislikes: number;
+
+  @Prop({ type: [String], default: [] })
+  likedBy: string[];
+
+  @Prop({ type: [String], default: [] })
+  dislikedBy: string[];
 }
 
 export const RespostaSchema = SchemaFactory.createForClass(Resposta);

@@ -2,26 +2,43 @@ import { Module } from '@nestjs/common';
 import { DuvidaModule } from './duvida/duvida.module';
 import { RespostaModule } from './resposta/resposta.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config'; // Importe ConfigService
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    // 1. ConfigModule continua global
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+
+    // 2. MongooseModule configurado de forma assíncrona
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+    }),
+
+    // 3. JwtModule configurado de forma assíncrona e global
+    JwtModule.registerAsync({
+      global: true, // Torna o JwtService disponível em toda a aplicação
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('API_SECRET'),
+        signOptions: { expiresIn: '12h' },
+      }),
+    }),
+    
+    // 4. Seus outros módulos
     UserModule,
     AuthModule,
     DuvidaModule,
     RespostaModule,
-    JwtModule.register({
-      global: true,
-      secret: process.env.API_SECRET,
-      signOptions: { expiresIn: '12h' },
-    }),
   ],
 })
 export class AppModule {}

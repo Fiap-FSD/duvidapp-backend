@@ -1,24 +1,16 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsBoolean, IsNumber, IsOptional, MinLength } from 'class-validator';
 
 export class UpdateRespostaDto {
-  @ApiProperty({
-    example: '67886b8d920149a1874cf70',
-    description: 'ID único da resposta a ser atualizada.',
-  })
-  id: string;
-
-  @ApiProperty({
-    example: '67886b8d965449a1874de70',
-    description: 'ID único da dúvida em que a resposta pertence.'
-  })
-  duvidaId: string;
-
   @ApiProperty({
     example: 'Aqui está o conteúdo atualizado.',
     description: 'Conteúdo atualizado da resposta.',
     required: false,
   })
+  @IsOptional()
+  @IsString()
+  @MinLength(10, { message: 'O conteúdo deve ter pelo menos 10 caracteres.' })
   content?: string;
 
   @ApiProperty({
@@ -26,6 +18,8 @@ export class UpdateRespostaDto {
     description: 'Verificação atualizada da resposta.',
     required: false,
   })
+  @IsOptional()
+  @IsBoolean()
   isVerified?: boolean;
 
   @ApiProperty({
@@ -33,5 +27,7 @@ export class UpdateRespostaDto {
     description: 'Números atualizados de votos.',
     required: false,
   })
+  @IsOptional()
+  @IsNumber()
   votes?: number;
 }

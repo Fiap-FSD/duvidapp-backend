@@ -1,9 +1,13 @@
 export interface IResposta {
   id?: string;
-  duvidaId?: string; // ID da dúvida associada a resposta
-  authorId?: string; // ID do autor (aluno ou professor)
-  // author: string;
+  duvidaId: string;
+  authorId: string;
+  authorName: string; // Este campo é obrigatório
   content: string;
   isVerified: boolean;
-  votes: number; // se quisermos guardar quem votou, usa-se string[]
+  votes: number;
+  likes: number;
+  dislikes: number;
+  likedBy: string[]; // Array de IDs dos usuários que deram like
+  dislikedBy: string[]; // Array de IDs dos usuários que deram dislike
 }
